@@ -1,0 +1,75 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
+
+
+public class Main {
+    public static int randomNum;
+    public static void main(String[] args) {
+        JFrame window = new JFrame("Guessing Game");
+        window.setSize(500,500 );
+        window.setLayout(new GridLayout(3, 1)); //create new object here
+
+        //panel for textbox
+        JPanel textboxPanel = new JPanel(new FlowLayout()); //FlowLayout centers everything :3
+        JTextField textBox1 = new JTextField(10);
+
+        JPanel otherPanel = new JPanel(new FlowLayout());
+
+        textboxPanel.add(textBox1);
+
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        JButton guess1 = new JButton("Guess");
+        JButton newGame = new JButton("New game");
+        JButton Quit = new JButton("Quit");
+
+        buttonPanel.add(guess1);
+        buttonPanel.add(newGame);
+        buttonPanel.add(Quit);
+
+        window.add(textboxPanel);
+        window.add(buttonPanel);
+
+        JLabel label = new JLabel("Hello! Welcome to the Guessing Game!");
+        window.add(otherPanel);
+        otherPanel.add(label);
+
+        Random rand = new Random();
+        randomNum = rand.nextInt(1,101);
+        guess1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    int guess = Integer.parseInt(textBox1.getText());
+                    if(guess>100 || guess<1){
+                        label.setText("Enter number from 1 to 100");
+                    }else if (guess == randomNum) {
+                        label.setText("Correct number! You won!");
+                    }else if(guess<randomNum){
+                        label.setText("Enter a higher number");
+                    }else if(guess>randomNum){
+                        label.setText("Enter a lower number");
+                    }
+                }
+                catch (NumberFormatException a) {
+                    label.setText("Invalid number");
+                }
+            }
+        });
+        newGame.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                randomNum = rand.nextInt(1,101);
+                label.setText("Hello! Welcome to the Guessing Game!");
+            }
+        });
+
+        Quit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+        window.setVisible(true);
+    }
+}
