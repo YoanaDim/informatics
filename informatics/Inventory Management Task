@@ -1,0 +1,165 @@
+import java.util.Scanner;
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+//classes
+class Product {
+    private String name;
+    private double price;
+    private int quantity;
+
+    public Product(String name, double price, int quantity) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    public String getProductName() {
+        return name;
+    }
+    public double getProductPrice() {
+        return price;
+    }
+    public int getProductQuantity() {
+        return quantity;
+    }
+
+    public void getPrice(double price){
+        this.price= price;
+    }
+    public void getQuantity(int quantity){
+        this.quantity= quantity;
+    }
+    public void getName(String name){
+        this.name= name;
+    }
+}
+
+public class Main{
+    public static String product;
+    public static void main(String[] args) {
+        Scanner inventory= new Scanner(3);
+         JFrame frame= new JFrame("Inventory Management");
+        JFrame window = new JFrame("Inventory Management");
+        window.setSize(1000, 800 );
+        window.setLayout(new GridLayout(3, 1));
+
+        Font basicButton = new Font("Comic Sans", Font.BOLD, 70);
+        Font basicBoxFont = new Font("Comic Sans", Font.BOLD, 40);
+
+        //panel for textbox
+        JPanel textboxPanel = new JPanel(new FlowLayout());
+        JTextField textBox1 = new JTextField(10);
+        textboxPanel.add(textBox1);
+
+        JPanel enterPanel = new JPanel(new FlowLayout());
+
+        //name
+        JLabel productName= new JLabel("Enter Product Name:");
+        productName.setFont(basicBoxFont);
+        TextField productNameEnter = new TextField();
+        productNameEnter.setFont(basicBoxFont);
+        //price
+        JLabel productPrice=  new JLabel("Product Price");
+        productName.setFont(basicBoxFont);
+        TextField productPriceEnter = new TextField();
+        productPriceEnter.setFont(basicBoxFont);
+        //quantity
+        JLabel productQuantity=  new JLabel("Product Quantity");
+        productName.setFont(basicBoxFont);
+        TextField productQuantityEnter = new TextField();
+        productQuantityEnter.setFont(basicBoxFont);
+
+
+        enterPanel.setLayout(new GridLayout(3, 2));
+        enterPanel.add(productName);
+        enterPanel.add(productNameEnter);
+        enterPanel.add(productPrice);
+        enterPanel.add(productPriceEnter);
+        enterPanel.add(productQuantity);
+        enterPanel.add(productQuantityEnter);
+        frame.add(enterPanel);
+
+        //buttons!
+
+        JPanel outputButtons = new JPanel();
+        JPanel output = new JPanel();
+        output.setLayout(new GridLayout(1, 2));
+
+        JTextArea outputMenu = new JTextArea("Here is displayed console");
+        outputMenu.setFont(new Font("Comic Sans", Font.BOLD, 15));
+        outputMenu.setEditable(false);
+        outputMenu.setLineWrap(true);
+
+        //buttons 2.0
+
+        JPanel buttonPanel = new JPanel();
+
+        JButton addProductButton = new JButton("Add Product");
+        addProductButton.setFont(new Font("Comic Sans", Font.BOLD, 27));
+        addProductButton.setBackground(Color.BLUE);
+
+        JLabel explanationOfProductButton = new JLabel("Added in first empty slot");
+        explanationOfProductButton.setFont(new Font("Comic Sans", Font.BOLD, 20));
+
+        JButton setProductButton = new JButton("Set Product");
+        setProductButton.setFont(new Font("Comic Sans", Font.BOLD, 27));
+        setProductButton.setBackground(Color.BLUE);
+
+
+        TextField setProductSlotToChange = new TextField();
+        setProductSlotToChange.setFont(basicButton);
+        setProductButton.setHorizontalAlignment(SwingConstants.CENTER);
+        setProductButton.setVerticalAlignment(SwingConstants.CENTER);
+
+        buttonPanel.setLayout(new GridLayout(2, 2));
+        buttonPanel.add(addProductButton);
+        buttonPanel.add(explanationOfProductButton);
+        buttonPanel.add(setProductButton);
+        buttonPanel.add(setProductSlotToChange);
+
+        outputButtons.setLayout(new GridLayout(1, 2));
+        outputButtons.add(outputMenu);
+        outputButtons.add(buttonPanel);
+
+        frame.add(outputButtons);
+
+        JButton displayDetails= new JButton("Inventory");
+        displayDetails.setFont(new Font("Comic Sans", Font.BOLD, 30));
+        displayDetails.setBackground(Color.GRAY);
+
+        frame.add(displayDetails);
+        frame.setVisible(true);
+
+        addProductButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if(productNameEnter.getText().equals("")) {
+                    outputMenu.setText("No product found. Please enter another product.");
+                    return;
+                }
+                if(productPriceEnter.getText().equals("")) {
+                    outputMenu.setText("Invalid input. Please try again.");
+                    return;
+                }
+                if(productQuantityEnter.getText().equals("")) {
+                    outputMenu.setText("Invalid input. Please try again.");
+                    return;
+                }
+            }
+        }
+        );
+
+        //Inventory
+        displayDetails.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                outputMenu.setText(inventory.());
+            }
+        });
+    }
+
+}
