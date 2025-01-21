@@ -1,0 +1,107 @@
+//discount calculator
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Main {
+    public static void main(String[] args) {
+        Main main = new Main();
+        JFrame frame = new JFrame();
+
+        JTextField discountField;
+        JTextField priceField;
+        JTextField finalPriceField;
+        JTextField calculateField;
+        
+        //font
+        Font basicBoxFont = new Font("Comic Sans", Font.BOLD, 15);
+
+        JTextArea inventoryArea;
+
+        frame = new JFrame("Discount Calculator");
+        frame.setSize(500, 200);
+        frame.setLayout(new GridLayout(2, 2));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().setLayout(new BorderLayout());
+        //top panel
+        JPanel panel = new JPanel();
+        frame.getContentPane().add(panel, BorderLayout.NORTH);
+        panel.setLayout(new GridLayout(3, 2));
+
+        frame.setVisible(true);
+
+        //labels and textboxes
+
+        JLabel productPrice = new JLabel("Product price:");
+        panel.add(productPrice);
+        productPrice.setFont(basicBoxFont);
+
+        priceField = new JTextField();
+        panel.add(priceField);
+
+        productPrice.setVisible(true);
+        priceField.setVisible(true);
+
+        JLabel discount = new JLabel("Product discount:");
+        panel.add(discount);
+        discount.setFont(basicBoxFont);
+
+        discountField = new JTextField();
+        panel.add(discountField);
+
+        //button
+        JButton calculate= new JButton("Calculate!");
+        panel.add(calculate);
+        calculate.setFont(basicBoxFont);
+        calculate.setBackground(Color.RED);
+
+        calculateField = new JTextField();
+        panel.add(calculateField);
+
+        frame.setVisible(true);
+
+        //action listener
+
+        calculate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Calculate calculate= new Calculate(Double.parseDouble(discountField.getText()), Double.parseDouble(priceField.getText()));
+                    if (calculate.getDiscount()>=1 && calculate.getDiscount()<=100){ //checking if the percent is from 1 to 100
+                        calculateField.setText("Result: " + calculate.sum());
+                    }
+                    else{
+                        calculateField.setText("Enter positive number from 1 to 100");
+                    }
+
+
+                } catch (NumberFormatException ex) {
+                    priceField.setText("Invalid input. Please enter a number.");
+                    discountField.setText("Invalid input. Please enter a number.");
+                }
+            }
+        });
+
+    }
+}
+
+//class
+
+class Calculate {
+    private double discount;
+    private double price;
+
+    public Calculate(double discount, double price) {
+        this.discount = discount;
+        this.price = price;
+    }
+
+    public double sum() {
+        return ((100 - discount) / 100) * price;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+}
