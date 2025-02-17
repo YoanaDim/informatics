@@ -1,0 +1,60 @@
+import java.util.Scanner;
+public class Main {
+    private static String[] names = {"cheese", "cucumber", "crackers", "cola"};
+    private static double[] price = {30.0, 2.3, 1.2, 1.2};
+    private static int[] quantity = {3, 3, 4, 5};
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        displayItems();
+
+        for (int i = 0; i >= 0; i++) {
+
+            System.out.println("add money: ");
+            double coin = scanner.nextDouble();
+
+          System.out.println("enter product to buy or type exit to quit and get money back: ");
+            String productName = scanner.next();
+            int amount= 0;
+            switch (productName) {
+                case "cheese":
+                    amount = 0;
+                    break;
+                case "cucumber":
+                    amount = 1;
+                     break;
+                case "crackers":
+                    amount = 2;
+                    break;
+                case "cola":
+                    amount = 3;
+                    break;
+                case "exit":
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("invalid product");
+                    break;
+            }
+
+            System.out.println("enter quantity: ");
+            int quantityBuy = scanner.nextInt();
+
+            if(coin*quantityBuy<price[amount]*quantityBuy){
+                System.out.println("not enough money");
+            }else if(quantityBuy>quantity[amount]){
+                System.out.println("not enough in stock");
+            }else{
+                System.out.println("Products left: " + (quantity[amount] - quantityBuy));
+                System.out.println("Change: " +  (coin - price[amount]));
+            }
+        }
+    }
+    public static void displayItems(){
+        System.out.println("Available items: ");
+        for (int i = 0; i < names.length; i++) {
+            System.out.println(names[i] + ", price: " + price[i] + ", quantity: " + quantity[i]);
+        }
+    }
+}
+
