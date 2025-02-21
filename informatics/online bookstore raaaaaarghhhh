@@ -1,0 +1,67 @@
+import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String[] title = {"The Stranger", "The Perks of Being a Wallflower", "Acid for the Children", "The Lightning Thief"};
+        double[] price = {14.50, 15.50, 19.5, 17.50};
+        int[] quantity = {5, 10, 11, 20};
+        displayItems(title, price, quantity);
+
+        for (int i = 0; i >= 0; i++) {
+            System.out.println("Type a number (exit to quit)");
+            String entry = scanner.nextLine();
+            if (entry.equalsIgnoreCase("exit")) {
+                System.out.println("Thank you for shopping with us!");
+                System.exit(0);
+            }
+            try{
+                int num = Integer.parseInt(entry);
+                if (num >= 1 && num<= title.length){
+                    toBuy(num- 1,title, price, quantity, scanner);
+                } else {
+                    System.out.println("invalid");
+                }
+            }
+            catch (Exception e) {
+                search(entry, title, price, quantity, scanner);
+            }
+        }
+    }
+
+    public static void displayItems(String[] title, double[] price, int[] quantity) {
+        System.out.println("Inventory:");
+
+        for (int i = 0; i < title.length; i++) {
+            System.out.println("Title: " + title[i] + " Price: " + price[i] + " Quantity: " + quantity[i]);
+        }
+    }
+
+    public static void toBuy(int entry, String[] title, double[] price, int[] quantity, Scanner scanner) {
+        if (quantity[entry]> 0){
+            System.out.println("enter money:");
+            int coin = scanner.nextInt();
+            if(coin >= price[entry]) {
+                System.out.println(title[entry] + " is now yours to read!");
+                quantity[entry]--;
+            }
+            else{
+                System.out.println("gimme more money");
+            }
+        }
+        else{
+            System.out.println("no more in stock");
+        }
+    }
+
+    public static void search(String entry, String[] title, double[] price, int[] quantity, Scanner scanner){
+        boolean inStock = false;
+        for(int i= 0; i< title.length; i++){
+            if(entry.equalsIgnoreCase(title[i])){
+                System.out.println("Title: " + title[i] + " Price: " + price[i] + " Quantity: " + quantity[i]);
+                toBuy(i, title, price, quantity, scanner);
+                inStock = true;
+                break;
+            }
+        }
+    }
+}
