@@ -1,0 +1,100 @@
+public class Main {
+    public static void main(String[] args) {
+        House[] Hospital = {
+                new patient(37, "Stacy", "female"),
+                new doctor(34, "Cameron", "female"),
+                new nurse(50, "Ben", "male"),
+
+        };
+
+        System.out.println("Welcome to Princeton Planesborough hospital!");
+        for (House house : Hospital) {
+            house.makeSound();
+            System.out.println("What does " + house.getName() + " do? " + house.getProduct());
+            System.out.println();
+        }
+    }
+}
+
+class House {
+    int age;
+    String name;
+    String gender;
+
+    public House(int age, String name,String gender) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void makeSound() {
+        // Default: No sound
+        System.out.println("House: I love vicodin");
+    }
+
+    public String getProduct() {
+        // Default: nothing
+        return "";
+    }
+}
+
+class patient extends House {
+    public patient(int age, String name, String gender) {
+        super(age, name, gender);
+    }
+
+    @Override
+    public void makeSound() {
+        System.out.println(name + ": I am sick");
+    }
+
+    @Override
+    public String getProduct() {
+        if (gender.equalsIgnoreCase("female")) {
+            return "likes Chase";
+        } else {
+            return "likes Cameron)";
+        }
+    }
+}
+
+class doctor extends House {
+    public doctor(int age, String name, String gender) {
+        super(age, name, gender);
+    }
+
+    @Override
+    public void makeSound() {
+        System.out.println(name + " doesn't agree with House.");
+    }
+
+    @Override
+    public String getProduct() {
+        if (gender.equalsIgnoreCase("female")) {
+            return " she likes House";
+        } else {
+            return " he doesn't like House.)";
+        }
+    }
+}
+
+class nurse extends House {
+    public nurse(int age, String name, String gender) {
+        super(age, name, gender);
+    }
+    public void makeSound() {
+        System.out.println("Nurse " + name + " hates working so much");
+    }
+    public String getProduct() {
+        if (gender.equalsIgnoreCase("female")) {
+            return " whines about House being an idiot.";
+        }
+        else{
+            return " whines about House's rude comments";
+        }
+    }
+}
