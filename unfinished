@@ -1,0 +1,36 @@
+import java.io.*;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String filename=scanner.nextLine();
+
+        for(int i= 0; i>=0; i++){
+            String message=scanner.nextLine();
+            fileWriterTest(message,filename);
+        }
+    }
+
+    private static void fileWriterTest(String message, String fileName){
+        String path = "home/ydimitrova26/Desktop/" + fileName + ".txt";
+        try(FileWriter outStream = new FileWriter(path, true)){
+            outStream.write(message);
+            System.out.println("fileWriterTest method is successful!");
+        }
+        catch (IOException e){
+            System.out.println("imame problemche: " + e);
+        }
+    }
+
+    private static void printWriterTest(String message, String fileName){
+        try(PrintWriter outStream = new PrintWriter(new FileOutputStream(fileName))) {
+            outStream.print(message);
+            System.out.println("printWriterTest method is successful!");
+        }
+        catch (IOException e){
+            System.out.println("imame problemche: " + e);
+        }
+    }
+}
