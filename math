@@ -1,0 +1,65 @@
+import java.io.*;
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main{
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Comment tu t'appelles?");
+        String name = sc.nextLine();
+        for(int i = 0; i < 5; i++){
+            Random oppar= new Random();
+            int num1 = oppar.nextInt(100);
+            int num2 = oppar.nextInt(100);
+
+            String sign = "";
+            int random= oppar.nextInt(2);
+            switch(random){
+                case 0:
+                    sign= "+";
+                    break;
+                case 1:
+                    sign= "-";
+                    break;
+            }
+            String quest = "vuprosche: " + num1 + " " + sign + " " + num2 + " = ";;
+            System.out.print(quest);
+
+            for(int j = 0; j < 5; j++){
+                try{
+                    int ans = sc.nextInt();
+                    fileWriter(name,quest);
+                    fileWriter(name,Integer.toString(ans));
+
+                    if(sign.equals("+")){
+                        if(ans == num1+num2)
+                            fileWriter(name," true\n");
+                        else
+                            fileWriter(name," false\n");
+                    }
+                    else{
+                        if(ans == num1-num2)
+                            fileWriter(name," true\n");
+                        else
+                            fileWriter(name," false\n");
+                    }
+                    break;
+                }
+                catch(Exception e){
+                    System.out.println("ne vaji");
+                    sc.next();
+                    System.out.print(quest);
+                }
+            }
+        }
+    }
+    public static void fileWriter(String name, String message){
+        String path = "C:/Users/My PC/Desktop//" + name + "-answers.txt";
+        try(FileWriter fw = new FileWriter(path, true)){
+            fw.write(message);
+        }
+        catch(IOException e){
+            System.out.println("whoops " + e.getMessage());
+        }
+    }
+}
