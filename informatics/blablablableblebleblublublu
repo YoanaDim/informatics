@@ -1,0 +1,42 @@
+import java.io.*;
+import java.util.Random;
+
+public class Main {
+    public static void main(String[] args) {
+      String path= "/home/ydimitrova26/Informatics/serialization.txt";
+      Employee e1= new Employee("yoans", 18, 1304);
+      e1.write(path);
+      e1.read(path);
+    }
+}
+
+class Employee implements Serializable{
+    String name;
+    int age;
+    int id;
+
+    public Employee(String name, int age, int id){
+        this.name= name;
+        this.age= age;
+        this.id= id;
+    }
+    public void write(String path){
+        try(ObjectOutputStream oos= new ObjectOutputStream(new FileOutputStream(path))){
+            oos.writeObject(this);
+        }
+        catch(IOException e){
+            System.out.println("problem " + e.getMessage());
+        }
+    }
+    public void read(String path){
+        try(ObjectInputStream ois= new ObjectInputStream(new FileInputStream(path))) {
+            while(true){
+                Employee employee = (Employee)ois.readObject();
+                System.out.println(employee.name + " " + employee.age + " " + employee.id);
+        }
+        }
+        catch(IOException | ClassNotFoundException e){
+        System.out.println("problem " + e.getMessage());
+    }
+    }
+}
