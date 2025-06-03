@@ -1,0 +1,124 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class Main extends JFrame {
+
+    private final Color BACKGROUND_COLOR = new Color(18, 18, 18);
+    private final Color CARD_COLOR = new Color(40, 40, 40);
+    private final Color ACCENT_COLOR = new Color(30, 215, 96);
+    private final Color TEXT_COLOR = new Color(255, 255, 255);
+    private final Color SECONDARY_TEXT = new Color(179, 179, 179);
+
+    public Main() {
+        setTitle("Spotify Playlist Manager");
+        setSize(500, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setBackground(BACKGROUND_COLOR);
+        setLayout(new BorderLayout(10, 10));
+        add(createHeaderPanel(), BorderLayout.NORTH);
+        add(createPlaylistPanel(), BorderLayout.CENTER);
+        add(createControlPanel(), BorderLayout.SOUTH);
+
+        setVisible(true);
+    }
+
+    private JPanel createHeaderPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(BACKGROUND_COLOR);
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JLabel title = new JLabel("My Playlist");
+        title.setForeground(TEXT_COLOR);
+        title.setFont(new Font("Arial", Font.BOLD, 20));
+        title.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panel.add(title);
+
+        JPanel inputPanel = new JPanel();
+        inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.X_AXIS));
+        inputPanel.setBackground(BACKGROUND_COLOR);
+        inputPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JTextField songField = createTextField("Song name");
+        JTextField artistField = createTextField("Artist");
+
+        JButton addButton = createButton("Add");
+        JButton likeButton = createButton("♥");
+
+        inputPanel.add(songField);
+        inputPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        inputPanel.add(artistField);
+        inputPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        inputPanel.add(addButton);
+        inputPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+        inputPanel.add(likeButton);
+
+        panel.add(Box.createRigidArea(new Dimension(0, 10)));
+        panel.add(inputPanel);
+
+        return panel;
+    }
+
+    private JPanel createPlaylistPanel() {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(BACKGROUND_COLOR);
+        panel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+
+        DefaultListModel<String> playlistModel = new DefaultListModel<>();
+        JList<String> playlist = new JList<>(playlistModel);
+        playlist.setBackground(CARD_COLOR);
+        playlist.setForeground(TEXT_COLOR);
+        playlist.setSelectionBackground(ACCENT_COLOR);
+        playlist.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        JScrollPane scrollPane = new JScrollPane(playlist);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        panel.add(scrollPane, BorderLayout.CENTER);
+
+        return panel;
+    }
+
+    private JPanel createControlPanel() {
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        panel.setBackground(CARD_COLOR);
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JButton removeButton = createButton("Remove");
+        JButton saveButton = createButton("Save");
+        JButton searchButton = createButton("Search");
+
+        panel.add(removeButton);
+        panel.add(saveButton);
+        panel.add(searchButton);
+
+        return panel;
+    }
+
+    private JTextField createTextField(String placeholder) {
+        JTextField field = new JTextField(15);
+        field.setBackground(CARD_COLOR);
+        field.setForeground(TEXT_COLOR);
+        field.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(CARD_COLOR, 1),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
+        field.setText(placeholder);
+        return field;
+    }
+
+    private JButton createButton(String text) {
+        JButton button = new JButton(text);
+        button.setForeground(BACKGROUND_COLOR);
+        button.setBackground(ACCENT_COLOR);
+        button.setFont(new Font("Arial", Font.BOLD, 12));
+        button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
+        button.setFocusPainted(false);
+        return button;
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            new Main();
+        });
+    }
+}
